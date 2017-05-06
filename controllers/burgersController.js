@@ -1,35 +1,43 @@
+// dependency declarations
 const express = require('express');
 const router = express.Router();
+const colors = require('colors');
+
+// model import
 const burgers = require('../models/burger.js');
 
-router.get('/', function(req, res){
-    res.redirect('/')
-});
-
-router.get('/burgers', function(req, res){
-    burgers.all(function(data){
-        const hbsObject = {burgers: data};
-
-        console.log(hbsObject);
-
-        res.render('index', hbsObject);
+// Create all our routes and set up logic within those routes where required.
+router.get('/', function (req, res) {
+    burgers.all(function (data) {
+        let allBurgers = {burger: data};
+        console.log(('CTLR all response     = ' + JSON.stringify(allBurgers, null, 0)).inverse.green);
+        res.render('index', allBurgers);
     });
 });
 
-router.post('/burgers/create', function(req, res){
-    burgers.create(['burger_name'], [req.body.b_name], function(data){
-        res.redirect('/burgers')
-    });
+router.post('/create', function (req, res) {
+    burgers.create(['burger_name'], [req.body.burger_type], function (data) {
+        res.redirect('/');
+        console.log(('CTLR create request   = ' + JSON.stringify(req.body)).green);
+        console.log(('CTLR create response  = ' + JSON.stringify(data, null, 0)).inverse.green);
+    })
 });
 
-router.put('/burgers/update/:id', function(req, res){
-    const condition = 'id = ' + req.params.id;
-
-    console.log('condition ', condition);
-
-    burgers.update({'devoured': req.body.devoured}, condition, function(data){
-        res.redirect('/burgers');
-    });
+router.post('/update/:id', function (req, res) {
+    burgers.update(['devoured'], [req.params.id], function (data) {
+        res.redirect('/');
+        console.log(('CTLR update request   = ' + JSON.stringify(req.body)).green);
+        console.log(('CTLR update response  = ' + JSON.stringify(data, null, 0)).inverse.green);
+    })
 });
 
+router.post('/delete/:id', function (req, res) {
+    burgers.delete([req.params.id], function (data) {
+        console.log(('CTLR update request   = ' + JSON.stringify(req.body)).green);
+        console.log(('CTLR update response  = ' + JSON.stringify(data, null, 0)).inverse.green);
+        res.redirect('/');
+    })
+});
+
+// Export routes for server.js to use.
 module.exports = router;

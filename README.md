@@ -1,6 +1,6 @@
 # [BurgerTime (ya gotta eat!)]
 
-*Nothing to install. Nothing to run.  Just bring your hunger and create your favorite burger at [BurgerTime](https://burgertime-app.herokuapp.com/).*
+*Nothing to install. Nothing to run.  Just bring your hunger and create your favorite burger at [BurgerTime](https://fierce-island-89053.herokuapp.com/).*
 <br>
 ### BurgerTime is a full stack app utilizing Node, Express, MySQL and Handlebars.
 ---
